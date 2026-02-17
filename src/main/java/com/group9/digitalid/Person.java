@@ -27,6 +27,13 @@ public class Person {
        try {
            // Parse offense date (will throw exception if invalid format)
            Date offenseDate = dateFormat.parse(offenseDateStr);
+           // Validate that points are within allowed range (1-6)
+           if (points < 1 || points > 6) {
+               return "Failed"; // Invalid points
+           }
+
+           // Add the points to the HashMap with offense date as key
+           demeritPoints.put(offenseDate, points);
 
            // Placeholder: return Success for now
            return "Success";
