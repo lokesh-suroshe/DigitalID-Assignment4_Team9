@@ -12,6 +12,22 @@ public class PersonManager {
                                         String newAddress, String newBirthdate) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(FILENAME));
+            
+            int foundIndex = -1;
+            String foundLine = null;
+            
+            for (int i = 0; i < lines.size(); i++) {
+                if (lines.get(i).startsWith(oldID + "|")) {
+                    foundIndex = i;
+                    foundLine = lines.get(i);
+                    break;
+                }
+            }
+            
+            if (foundIndex == -1) {
+                return false;
+            }
+            
         } catch (IOException e) {
             return false;
         }
