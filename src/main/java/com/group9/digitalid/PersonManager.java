@@ -46,6 +46,14 @@ public class PersonManager {
                 }
             }
             
+            int age = calculateAge(currentDOB);
+            if (age < 18) {
+                if (!currentAddress.equals(newAddress)) {
+                    System.out.println("Error: Minors cannot change addresses");
+                    return false;
+                }
+            }
+            
         } catch (IOException e) {
             return false;
         }
