@@ -34,6 +34,30 @@ public class Person {
 
            // Add the points to the HashMap with offense date as key
            demeritPoints.put(offenseDate, points);
+           // Parse birthdate to calculate age
+           Date bDate = dateFormat.parse(this.birthdate);
+           Calendar birth = Calendar.getInstance();
+           birth.setTime(bDate);
+           Calendar now = Calendar.getInstance();
+
+           // Calculate age
+           int age = now.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+           if (now.get(Calendar.DAY_OF_YEAR) < birth.get(Calendar.DAY_OF_YEAR)) {
+               age--; // Adjust if birthday hasn't occurred this year
+           }
+
+           // Calculate total demerit points accumulated
+           int totalPoints = 0;
+           for (int p : demeritPoints.values()) {
+               totalPoints += p;
+           }
+
+           // Apply suspension rules based on age and points
+           if (age < 21 && totalPoints > 6) {
+               this.isSuspended = true;
+           } else if (age >= 21 && totalPoints > 12) {
+               this.isSuspended = true;
+           }
 
            // Placeholder: return Success for now
            return "Success";
