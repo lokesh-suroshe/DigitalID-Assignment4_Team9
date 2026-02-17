@@ -19,4 +19,21 @@ public class Person {
        this.birthdate = birthdate;
        this.isSuspended = false;
    }
+   public String addDemeritPoints(String offenseDateStr, int points) {
+       // Create date formatter with strict parsing
+       SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+       dateFormat.setLenient(false);
+
+       try {
+           // Parse offense date (will throw exception if invalid format)
+           Date offenseDate = dateFormat.parse(offenseDateStr);
+
+           // Placeholder: return Success for now
+           return "Success";
+
+       } catch (ParseException e) {
+           // Return Failed if offense date format is invalid
+           return "Failed";
+       }
+   }
 }
