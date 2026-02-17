@@ -3,6 +3,9 @@ package com.group9.digitalid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class PersonManager {
@@ -47,5 +50,12 @@ public class PersonManager {
             return false;
         }
         return false;
+    }
+    
+    private int calculateAge(String birthdate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dob = LocalDate.parse(birthdate, formatter);
+        LocalDate today = LocalDate.now();
+        return Period.between(dob, today).getYears();
     }
 }
