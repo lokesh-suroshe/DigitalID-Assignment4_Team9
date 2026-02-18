@@ -1,7 +1,9 @@
 // Import JUnit classes for assertions and tests
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 // Test class for Person demerit points functionality
 class PersonDemeritTest {
 
@@ -56,6 +58,12 @@ class PersonDemeritTest {
        // Should be suspended
        assertTrue(p.getIsSuspended(), "Over 21 should be suspended if total points > 12");
    }
+    @Test
+    void testPointsBelowValidRange() {
+        Person p = new Person("56s_d%&fAB", "15-11-1990");
+        assertEquals("Failed", p.addDemeritPoints("10-02-2026", 0), 
+                    "Should fail because points are below minimum of 1");
+    }
 
 
 }
