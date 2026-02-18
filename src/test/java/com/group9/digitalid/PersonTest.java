@@ -69,5 +69,11 @@ class PersonDemeritTest {
         Person p = new Person("56s_d%&fAB", "15-11-1990");
         assertEquals("Failed", p.addDemeritPoints("10-02-2026", -1), "Should fail because points cannot be negative");
     }
+    @Test
+    void testUnder21ExactlyAtThresholdNotSuspended() {
+        Person p = new Person("22s_d%&fXY", "01-01-2008");
+        p.addDemeritPoints("01-01-2026", 6);
+        assertFalse(p.getIsSuspended(), "Under 21 should NOT be suspended with exactly 6 points");
+}
 
 }
