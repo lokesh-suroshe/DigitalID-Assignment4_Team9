@@ -91,4 +91,15 @@ class PersonDemeritTest {
         Person p = new Person("56s_d%&fAB", "15-11-1990");
         assertEquals("Failed", p.addDemeritPoints("", 3), "Should fail with empty date string");
     }
+    @Test
+    void testDemeritPointsWrittenToFile() throws IOException {
+        Files.deleteIfExists(Paths.get("demeritPoints.txt"));
+        Person p = new Person("56s_d%&fAB", "15-11-1990");
+        p.addDemeritPoints("10-02-2026", 3);
+        assertTrue(Files.exists(Paths.get("demeritPoints.txt")),"File should be created");
+        String content = Files.readString(Paths.get("demeritPoints.txt"));
+        assertTrue(content.contains("56s_d%&fAB"), "File should contain person ID");
+        assertTrue(content.contains("10-02-2026"), "File should contain offense date");
+        Files.deleteIfExists(Paths.get("demeritPoints.txt"));
+}
 }
