@@ -54,6 +54,12 @@ public class PersonManager {
                 }
             }
             
+            if (!newBirthdate.equals(currentDOB)) {
+                if (!newID.equals(currentID) || !newName.equals(currentName) || !newAddress.equals(currentAddress)) {
+                    return false;
+                }
+            }
+            
         } catch (IOException e) {
             return false;
         }
