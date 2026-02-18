@@ -86,4 +86,9 @@ class PersonDemeritTest {
         Person p = new Person("56s_d%&fAB", "15-11-1990");
         assertEquals("Failed", p.addDemeritPoints("2026-02-10", 3), "Should fail due to incorrect date format");
     }
+    @Test
+    void testEmptyDateString() {
+        Person p = new Person("56s_d%&fAB", "15-11-1990");
+        assertEquals("Failed", p.addDemeritPoints("", 3), "Should fail with empty date string");
+    }
 }
