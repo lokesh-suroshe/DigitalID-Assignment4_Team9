@@ -31,4 +31,19 @@ public class UpdateDetailsTest {
     public void tearDown() throws IOException {
         Files.deleteIfExists(Paths.get(TEST_FILE));
     }
+
+    @Test
+    public void testEvenIDChangeFails() throws IOException {
+        List<String> testData = Arrays.asList("222|Alice|Street3|15-05-1985");
+        Files.write(Paths.get(TEST_FILE), testData);
+        
+        boolean result = manager.updatePersonalDetails("222", "223", "Alice", "Street3", "15-05-1985");
+        assertFalse(result);
+    }
+
+    @Test
+    public void testMinorAddressChangeFails() {
+        boolean result = manager.updatePersonalDetails("333", "333", "Kid", "NewStreet", "01-01-2015");
+        assertFalse(result);
+    }
 }
