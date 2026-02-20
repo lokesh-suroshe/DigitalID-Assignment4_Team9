@@ -55,35 +55,35 @@ public class PersonManager {
             String currentAddress = parts[2];
             String currentDOB = parts[3];
             
+            // Rule 1: Even-digit ID Lock
             char firstDigit = oldID.charAt(0);
-            if (firstDigit == '0' || firstDigit == '2' || firstDigit == '4' || 
-                firstDigit == '6' || firstDigit == '8') {
+            if ("02468".indexOf(firstDigit) != -1) {
                 if (!newID.equals(oldID)) {
-                    System.out.println("Error: Even-digit IDs cannot be modified");
+                    System.out.println("Error: Even-digit IDs are immutable.");
                     return false;
                 }
             }
             
+            // Rule 2: Minor Address Lock
             int age = calculateAge(currentDOB);
             if (age < 18) {
-                if (!currentAddress.equals(newAddress)) {
-                    System.out.println("Error: Minors cannot change addresses");
+                if (!currentAddress.trim().equals(newAddress.trim())) {
+                    System.out.println("Error: Residential address updates are restricted for minors.");
                     return false;
                 }
             }
             
+            // Rule 3: Birthday-Only Update Constraint
             if (!newBirthdate.equals(currentDOB)) {
-                if (!newID.equals(currentID) || !newName.equals(currentName) || !newAddress.equals(currentAddress)) {
+                if (!newID.equals(currentID) || !newName.equals(currentName) || 
+                    !currentAddress.trim().equals(newAddress.trim())) {
+                    System.out.println("Error: If DOB is modified, other fields must remain unchanged.");
                     return false;
                 }
             }
             
-            // TODO: Integration with shared validation logic
-            // Once Person 1's validation methods are merged, uncomment the following:
+            // (Person 1's work)
             // if (!Validator.isValidID(newID)) return false;
-            // if (!Validator.isValidName(newName)) return false;
-            // if (!Validator.isValidAddress(newAddress)) return false;
-            // if (!Validator.isValidBirthdate(newBirthdate)) return false;
             
             String updatedLine = newID + "|" + newName + "|" + newAddress + "|" + newBirthdate;
             lines.set(foundIndex, updatedLine);
@@ -104,7 +104,6 @@ public class PersonManager {
     private int calculateAge(String birthdate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate dob = LocalDate.parse(birthdate, formatter);
-        LocalDate today = LocalDate.now();
-        return Period.between(dob, today).getYears();
+        return Period.between(dob, LocalDate.now()).getYears();
     }
 }
