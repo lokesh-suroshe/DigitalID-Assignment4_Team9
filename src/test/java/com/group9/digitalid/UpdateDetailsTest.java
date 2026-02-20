@@ -46,4 +46,16 @@ public class UpdateDetailsTest {
         boolean result = manager.updatePersonalDetails("333", "333", "Kid", "NewStreet", "01-01-2015");
         assertFalse(result);
     }
+
+    @Test
+    public void testBirthdayChangeSuccess() {
+        boolean result = manager.updatePersonalDetails("111", "111", "John", "Street1", "02-02-1990");
+        assertTrue(result);
+    }
+
+    @Test
+    public void testBirthdayWithOtherChangeFails() {
+        boolean result = manager.updatePersonalDetails("111", "111", "Jonathan", "Street1", "02-02-1990");
+        assertFalse(result);
+    }
 }
